@@ -53,7 +53,7 @@ jobs:
           poetry publish
 
   build_docs:
-    needs: build
+    needs: build_and_publish_pypi
     runs-on: ubuntu-latest
     if: github.repository_owner == 'statnett'
     steps:
