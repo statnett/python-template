@@ -47,12 +47,15 @@ jobs:
           poetry run flake8 .
           poetry run black --check .
           poetry run isort -c .
-      - name: deploy
+      - name: build package
         run: |
-          poetry config repositories.test-pypi https://test.pypi.org/legacy/
           poetry build
-          poetry publish -r test-pypi
-          poetry publish
+      - name: Publish package distributions to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
 
   build_docs:
     needs: build_and_publish_pypi
